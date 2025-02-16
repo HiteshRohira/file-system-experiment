@@ -12,12 +12,12 @@ async function getFile() {
   try {
     // Type assertion to handle the missing type definition
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    const picker = (window as any).showOpenFilePicker as () => Promise<[FileSystemFileHandle]>;
+    const picker = (window as any).showDirectoryPicker() as () => Promise<[FileSystemFileHandle]>;
     const [fileHandle] = await picker();
     const file = await fileHandle.getFile();
     return file;
   } catch (error) {
-    setError(error as string)
+    setError(`Error: ${JSON.stringify(error)}`)
     console.error('File system API not supported:', error);
     throw new Error('File system API is not supported in this browser');
   }
